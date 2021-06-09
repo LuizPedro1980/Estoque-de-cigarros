@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cigarros")
+@RequestMapping("/api/cigarros")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CigarroController implements CigarroControllerDocs {
 

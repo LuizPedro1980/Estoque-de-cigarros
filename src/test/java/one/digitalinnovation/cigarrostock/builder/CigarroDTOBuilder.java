@@ -23,7 +23,7 @@ public class CigarroDTOBuilder {
     private int quantity = 10;
 
     @Builder.Default
-    private CigarroType type = CigarroType.LAGER;
+    private CigarroType type = CigarroType.VIRGINIA;
 
     public CigarroDTO toCigarroDTO() {
         return new CigarroDTO(id,

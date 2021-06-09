@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CigarroServiceTest {
 
-    private static final long INVALID_BEER_ID = 1L;
+    private static final long INVALID_CIGARRO_ID = 1L;
 
     @Mock
     private CigarroRepository cigarroRepository;
@@ -169,9 +169,9 @@ public class CigarroServiceTest {
     @Test
     void whenIncrementIsGreatherThanMaxThenThrowException() {
         CigarroDTO expectedCigarroDTO = CigarroDTOBuilder.builder().build().toCigarroDTO();
-        Cigarro expectedBeer = cigarroMapper.toModel(expectedCigarroDTO);
+        Cigarro expectedCigarro = cigarroMapper.toModel(expectedCigarroDTO);
 
-        when(cigarroRepository.findById(expectedCigarroDTO.getId())).thenReturn(Optional.of(expectedBeer));
+        when(cigarroRepository.findById(expectedCigarroDTO.getId())).thenReturn(Optional.of(expectedCigarro));
 
         int quantityToIncrement = 80;
         assertThrows(CigarroStockExceededException.class, () -> cigarroService.increment(expectedCigarroDTO.getId(), quantityToIncrement));
@@ -192,9 +192,9 @@ public class CigarroServiceTest {
     void whenIncrementIsCalledWithInvalidIdThenThrowException() {
         int quantityToIncrement = 10;
 
-        when(cigarroRepository.findById(INVALID_BEER_ID)).thenReturn(Optional.empty());
+        when(cigarroRepository.findById(INVALID_CIGARRO_ID)).thenReturn(Optional.empty());
 
-        assertThrows(CigarroNotFoundException.class, () -> cigarroService.increment(INVALID_BEER_ID, quantityToIncrement));
+        assertThrows(CigarroNotFoundException.class, () -> cigarroService.increment(INVALID_CIGARRO_ID, quantityToIncrement));
     }
 //
 //    @Test

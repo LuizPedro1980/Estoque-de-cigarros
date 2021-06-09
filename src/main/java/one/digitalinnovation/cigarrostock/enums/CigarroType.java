@@ -7,13 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CigarroType {
 
-    LAGER("Lager"),
-    MALZBIER("Malzbier"),
-    WITBIER("Witbier"),
-    WEISS("Weiss"),
-    ALE("Ale"),
-    IPA("IPA"),
-    STOUT("Stout");
+    VIRGINIA("Virgínia"),
+    LATAKIA("Latakia"),
+    PERIQUE("Perique"),
+    BURLEY("Burley"),
+    ORIENTAL("Oriental");
 
     private final String description;
 }

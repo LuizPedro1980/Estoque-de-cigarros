@@ -32,11 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class CigarroControllerTest {
 
-    private static final String BEER_API_URL_PATH = "/api/v1/beers";
-    private static final long VALID_BEER_ID = 1L;
-    private static final long INVALID_BEER_ID = 2l;
-    private static final String BEER_API_SUBPATH_INCREMENT_URL = "/increment";
-    private static final String BEER_API_SUBPATH_DECREMENT_URL = "/decrement";
+    private static final String CIGARRO_API_URL_PATH = "/api/v1/beers";
+    private static final long VALID_CIGARRO_ID = 1L;
+    private static final long INVALID_CIGARRO_ID = 2l;
+    private static final String CIGARRO_API_SUBPATH_INCREMENT_URL = "/increment";
+    private static final String CIGARRO_API_SUBPATH_DECREMENT_URL = "/decrement";
 
     private MockMvc mockMvc;
 
@@ -63,7 +63,7 @@ public class CigarroControllerTest {
         when(cigarroService.createCigarro(cigarroDTO)).thenReturn(cigarroDTO);
 
         // then
-        mockMvc.perform(post(BEER_API_URL_PATH)
+        mockMvc.perform(post(CIGARRO_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(cigarroDTO)))
                 .andExpect(status().isCreated())
@@ -79,7 +79,7 @@ public class CigarroControllerTest {
         cigarroDTO.setBrand(null);
 
         // then
-        mockMvc.perform(post(BEER_API_URL_PATH)
+        mockMvc.perform(post(CIGARRO_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(cigarroDTO)))
                 .andExpect(status().isBadRequest());
@@ -94,7 +94,7 @@ public class CigarroControllerTest {
         when(cigarroService.findByName(cigarroDTO.getName())).thenReturn(cigarroDTO);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + cigarroDTO.getName())
+        mockMvc.perform(MockMvcRequestBuilders.get(CIGARRO_API_URL_PATH + "/" + cigarroDTO.getName())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(cigarroDTO.getName())))
@@ -111,7 +111,7 @@ public class CigarroControllerTest {
         when(cigarroService.findByName(cigarroDTO.getName())).thenThrow(CigarroNotFoundException.class);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + cigarroDTO.getName())
+        mockMvc.perform(MockMvcRequestBuilders.get(CIGARRO_API_URL_PATH + "/" + cigarroDTO.getName())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -125,7 +125,7 @@ public class CigarroControllerTest {
         when(cigarroService.listAll()).thenReturn(Collections.singletonList(cigarroDTO));
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH)
+        mockMvc.perform(MockMvcRequestBuilders.get(CIGARRO_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is(cigarroDTO.getName())))
@@ -142,7 +142,7 @@ public class CigarroControllerTest {
         when(cigarroService.listAll()).thenReturn(Collections.singletonList(cigarroDTO));
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH)
+        mockMvc.perform(MockMvcRequestBuilders.get(CIGARRO_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -156,7 +156,7 @@ public class CigarroControllerTest {
         doNothing().when(cigarroService).deleteById(cigarroDTO.getId());
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.delete(BEER_API_URL_PATH + "/" + cigarroDTO.getId())
+        mockMvc.perform(MockMvcRequestBuilders.delete(CIGARRO_API_URL_PATH + "/" + cigarroDTO.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -164,10 +164,10 @@ public class CigarroControllerTest {
     @Test
     void whenDELETEIsCalledWithInvalidIdThenNotFoundStatusIsReturned() throws Exception {
         //when
-        doThrow(CigarroNotFoundException.class).when(cigarroService).deleteById(INVALID_BEER_ID);
+        doThrow(CigarroNotFoundException.class).when(cigarroService).deleteById(INVALID_CIGARRO_ID);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.delete(BEER_API_URL_PATH + "/" + INVALID_BEER_ID)
+        mockMvc.perform(MockMvcRequestBuilders.delete(CIGARRO_API_URL_PATH + "/" + INVALID_CIGARRO_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -181,9 +181,9 @@ public class CigarroControllerTest {
         CigarroDTO cigarroDTO = CigarroDTOBuilder.builder().build().toCigarroDTO();
         cigarroDTO.setQuantity(cigarroDTO.getQuantity() + quantityDTO.getQuantity());
 
-        when(cigarroService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(cigarroDTO);
+        when(cigarroService.increment(VALID_CIGARRO_ID, quantityDTO.getQuantity())).thenReturn(cigarroDTO);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch(BEER_API_URL_PATH + "/" + VALID_BEER_ID + BEER_API_SUBPATH_INCREMENT_URL)
+        mockMvc.perform(MockMvcRequestBuilders.patch(CIGARRO_API_URL_PATH + "/" + VALID_CIGARRO_ID + CIGARRO_API_SUBPATH_INCREMENT_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(quantityDTO))).andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(cigarroDTO.getName())))
